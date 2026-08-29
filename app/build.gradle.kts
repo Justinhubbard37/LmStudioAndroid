@@ -1,10 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.devtools.ksp)
-    kotlin("plugin.serialization") version "1.9.0"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -38,17 +37,16 @@ android {
         sourceCompatibility = Config.JAVA_VERSION
         targetCompatibility = Config.JAVA_VERSION
     }
-    kotlinOptions {
-        jvmTarget = Config.JAVA_VERSION.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
     buildFeatures {
         compose = true
     }
     composeCompiler {
         enableStrongSkippingMode = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Config.COMPOSE_VERSION
     }
     packaging {
         resources {
